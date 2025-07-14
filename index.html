@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Planner</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #333; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Container */
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+    /* Header */
+    header { text-align: center; padding: 40px 0; background: #4ECDC4; color: white; border-radius: 8px; }
+    header h1 { font-size: 3rem; margin-bottom: 10px; }
+    header p  { font-size: 1.2rem; }
+
+    /* Budget Tracker */
+    #budget-tracker { background: white; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    #budget-tracker h2 { color: #4ECDC4; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+    .form-group input { width: 100%; padding: 8px; border: 1px solid #ccd; border-radius: 4px; }
+    #expense-list { list-style: none; margin-top: 20px; }
+    #expense-list li { padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+    .totals { margin-top: 20px; font-size: 1.1rem; font-weight: bold; }
+    button { background: #ff6b6b; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; transition: background .3s; }
+    button:hover { background: #ee5253; }
+
+    /* Places to Visit */
+    #places { margin-top: 40px; }
+    #places h2 { color: #556270; margin-bottom: 20px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .card img { width: 100%; height: 180px; object-fit: cover; }
+    .card-content { padding: 15px; }
+    .card-content h3 { margin-bottom: 10px; color: #4ECDC4; }
+    .card-content p { margin-bottom: 8px; }
+
+    /* Footer */
+    footer { text-align: center; margin: 40px 0 20px; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Travel Planner</h1>
+      <p>Plan your trip, track expenses, and discover amazing places!</p>
+    </header>
+
+    <section id="budget-tracker">
+      <h2>Budget & Expense Tracker</h2>
+      <div class="form-group">
+        <label for="expense-name">Expense Name</label>
+        <input type="text" id="expense-name" placeholder="e.g., Hotel, Food">
+      </div>
+      <div class="form-group">
+        <label for="expense-amount">Amount (₹)</label>
+        <input type="number" id="expense-amount" placeholder="e.g., 1500">
+      </div>
+      <button id="add-expense">Add Expense</button>
+
+      <ul id="expense-list"></ul>
+      <div class="totals">
+        Total Spent: ₹<span id="total-spent">0</span>
+      </div>
+    </section>
+
+    <section id="places">
+      <h2>Places to Visit</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="https://source.unsplash.com/collection/190727/400x300" alt="Beautiful Beach">
+          <div class="card-content">
+            <h3>Tropical Beach</h3>
+            <p>Relax on golden sands by crystal waters.</p>
+            <p><strong>Cost:</strong> ₹500/day</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://source.unsplash.com/collection/827743/400x300" alt="Mountain Hike">
+          <div class="card-content">
+            <h3>Mountain Hike</h3>
+            <p>Breathtaking views and fresh mountain air.</p>
+            <p><strong>Cost:</strong> ₹800/day</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://source.unsplash.com/collection/1163637/400x300" alt="City Tour">
+          <div class="card-content">
+            <h3>City Tour</h3>
+            <p>Explore vibrant streets and historic landmarks.</p>
+            <p><strong>Cost:</strong> ₹600/day</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2025 Travel Planner. All Rights Reserved.
+    </footer>
+  </div>
+
+  <script>
+    const addBtn = document.getElementById('add-expense');
+    const expNameInput = document.getElementById('expense-name');
+    const expAmtInput = document.getElementById('expense-amount');
+    const list = document.getElementById('expense-list');
+    const totalSpan = document.getElementById('total-spent');
+    let total = 0;
+
+    addBtn.addEventListener('click', () => {
+      const name = expNameInput.value.trim();
+      const amt = parseFloat(expAmtInput.value);
+
+      if (!name || isNaN(amt) || amt <= 0) {
+        alert('Please enter a valid name and amount.');
+        return;
+      }
+
+      // Add to list
+      const li = document.createElement('li');
+      li.textContent = `${name} - ₹${amt.toFixed(2)}`;
+      list.appendChild(li);
+
+      // Update total
+      total += amt;
+      totalSpan.textContent = total.toFixed(2);
+
+      // Clear inputs
+      expNameInput.value = '';
+      expAmtInput.value = '';
+    });
+  </script>
+</body>
+</html>
